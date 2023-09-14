@@ -29,7 +29,9 @@ To setup crAPI, simply run `deploy-crapi.sh`, which will deploy the application 
 
 For **EKS deployments**, the following additional commands will have to be run, providing the cluster names and regions wherever applicable.
 
-`eksctl utils associate-iam-oidc-provider --region=<REGION-HERE> --cluster=<CLUSTER-NAME-HERE> --approve`
+```
+eksctl utils associate-iam-oidc-provider --region=<REGION-HERE> --cluster=<CLUSTER-NAME-HERE> --approve
+```
 
 ```
 eksctl create iamserviceaccount \
@@ -42,7 +44,9 @@ eksctl create iamserviceaccount \
   --role-name AmazonEKS_EBS_CSI_DriverRole
 ```
 
-`eksctl create addon --name aws-ebs-csi-driver --cluster <CLUSTER-NAME-HERE> --service-account-role-arn arn:aws:iam::$(aws sts get-caller-identity --query Account --output text):role/AmazonEKS_EBS_CSI_DriverRole --force`
+```
+eksctl create addon --name aws-ebs-csi-driver --cluster <CLUSTER-NAME-HERE> --service-account-role-arn arn:aws:iam::$(aws sts get-caller-identity --query Account --output text):role/AmazonEKS_EBS_CSI_DriverRole --force
+```
 
 
 ### Traffic Generation

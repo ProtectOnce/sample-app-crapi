@@ -50,6 +50,18 @@ class WebsiteUser(HttpUser):
         self.client.get(random.choice(self.endpoints),headers=headers)
 
     @task
+    def forgotPassword(self):
+        global users
+        data = {"email": random.choice(users)}
+        self.client.post("identity/api/auth/forget-password",json=data)
+    
+    @task
+    def wrongotp(self):
+        global users
+        data = {"email":random.choice(users),"otp":"123456","password":"Test@123"}
+        self.client.post("identity/api/auth/v3/check-otp",json=data)
+
+    @task
     def getReport(self):
         random_token = random.sample(self.tokens,1)[0]
         headers = {"Authorization":"Bearer " + random_token}
@@ -62,10 +74,11 @@ class WebsiteUser(HttpUser):
         headers = {"Authorization":"Bearer " + random_token}
         res = self.client.get("identity/api/v2/vehicle/vehicles",headers=headers).json()
         contact={
-            "mechanic_api": "http://127.0.0.1:8888/workshop/api/mechanic/receive_report",
+            "mechanic_api": self.client.base_url + "workshop/api/mechanic/receive_report",
             "mechanic_code": "TRAC_JHN", "number_of_repeats": 1, "problem_details": "Test message",
             "repeat_request_if_failed": False, "vin": res[0]["vin"]
         }
+        self.client.post("workshop/api/merchant/contact_mechanic",headers=headers,json=contact)
     
     @task
     def verifyToken(self):

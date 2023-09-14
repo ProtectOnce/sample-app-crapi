@@ -23,7 +23,7 @@ This repository serves as a starting point to deploy crAPI, an intentionally vul
     cd sample-app-crapi && pip install -r requirements.txt
     ```
 
-### Crapi Deployment
+### crAPI Deployment
 
 To setup crAPI, simply run `deploy-crapi.sh`, which will deploy the application in the connected k8s cluster.
 
@@ -41,4 +41,4 @@ For further configuration, you can modify the arguments passed in `crapi-traff-g
     -r The number of users spawned every second
     -u The number of users that will simulate browsing the application
     -t amount of time in seconds (30s) or minutes (1m) the script will run
-    -H public url of the crapi server
+    -H public url of the crAPI server

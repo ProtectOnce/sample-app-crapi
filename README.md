@@ -27,6 +27,24 @@ This repository serves as a starting point to deploy crAPI, an intentionally vul
 
 To setup crAPI, simply run `deploy-crapi.sh`, which will deploy the application in the connected k8s cluster.
 
+For **EKS deployments**, the following additional commands will have to be run, providing the cluster names and regions wherever applicable.
+
+`eksctl utils associate-iam-oidc-provider --region=<REGION-HERE> --cluster=<CLUSTER-NAME-HERE> --approve`
+
+```
+eksctl create iamserviceaccount \
+  --name ebs-csi-controller-sa \
+  --namespace kube-system \
+  --cluster <CLUSTER-NAME-HERE> \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+  --approve \
+  --role-only \
+  --role-name AmazonEKS_EBS_CSI_DriverRole
+```
+
+`eksctl create addon --name aws-ebs-csi-driver --cluster <CLUSTER-NAME-HERE> --service-account-role-arn arn:aws:iam::$(aws sts get-caller-identity --query Account --output text):role/AmazonEKS_EBS_CSI_DriverRole --force`
+
+
 ### Traffic Generation
 
 To generate automated traffic this script uses [locust](https://locust.io/). Run `crapi-traff-gen.sh`, and provide the URLs for crAPI and Mailhog along with the number of users to be created.

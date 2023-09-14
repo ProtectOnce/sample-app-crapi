@@ -5,16 +5,23 @@ This repository serves as a starting point to deploy crAPI, an intentionally vul
 
 ### Setup
 
-1. Clone the repository
-
-```bash
-git clone https://github.com/ProtectOnce/sample-app-crapi
-```
-
-2. Install the require packages
-```bash
-cd sample-app-crapi && pip install -r requirements.txt
-```
+1. Install [Helm](https://helm.sh/docs/intro/install/#through-package-managers).
+2. Install Python.
+    ```bash
+    sudo apt-get install python3.10
+    ```
+2. Install pip.
+    ```bash
+    python3 -m pip install --user --upgrade pip
+    ```
+3. Clone the repository.
+    ```bash
+    git clone https://github.com/ProtectOnce/sample-app-crapi
+    ```
+4. Install the required packages.
+    ```bash
+    cd sample-app-crapi && pip install -r requirements.txt
+    ```
 
 ### Crapi Deployment
 
